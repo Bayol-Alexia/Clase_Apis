@@ -1,40 +1,29 @@
 <?php
-import $call_config_server;
-    $nombre = $_GET['name'];
-    $apellidos = $_GET['apellidos'];
-    $arregloFinal = array();
-    $arrey2 = array();
 
-    if(!isset($nombre) && !isset($apellidos)){
-        $arregloFinal['status'] = 200;
-        $arregloFinal['respuesta'] = "Fue un exito!";
+$nombre = $_GET['nombre'];
+$arregloFinal = array();
+$arrey2 = array();
 
-        for(int $i = 0; $i < 20; $i++) {
-            $arrey2['nombre'] = 'Alejandro';
-            $arrey2['edad'] = $i;
-            $arrey2['band'] = true;
-        }
+if(!isset($nombre)){
+    $arregloFinal['status'] = 200;
+    $arregloFinal['respuesta'] = "Fue un éxito!";
 
-        $arregloFinal['respuesta2'] = $arrey2;
-    } else {
-        $arregloFinal['status'] = 500;
-        $arregloFinal['respuesta'] = "Fue un fracaso!";
-        $arregloFinal['respuesta2'] = $arrey2;
+    for($i = 0; $i < 20; $i++) {
+        $arrey2[$i]['nombre_user'] = 'Alejandro';
+        $arrey2[$i]['edad'] = $i;
+        $arrey2[$i]['band'] = true;
     }
 
-    echo json_encode($arregloFinal);
+    $arregloFinal['respuesta2'] = $arrey2;
+} else if($nombre === 'error500') {
+    $arregloFinal['status'] = 500;
+    $arregloFinal['respuesta'] = "Error de sintaxis de URL";
+    $arregloFinal['respuesta2'] = $arrey2;
+} else {
+    $arregloFinal['status'] = 404;
+    $arregloFinal['respuesta'] = "Objeto no encontrado";
+    $arregloFinal['respuesta2'] = $arrey2;
+}
 
-
-    {
-        "status": 200,
-        "respuesta": "Error",
-        "respuesta2": [
-            {
-                "nombre_user": "Alejandro",
-                "edad": 12,
-                "band": {
-                }
-            },
-        ]
-    }
+echo json_encode($arregloFinal);
 ?>
